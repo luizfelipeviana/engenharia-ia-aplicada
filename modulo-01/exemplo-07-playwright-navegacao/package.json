@@ -1,0 +1,14 @@
+{
+  "name": "exemplo-07-playwright-navegacao",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node navegar.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
