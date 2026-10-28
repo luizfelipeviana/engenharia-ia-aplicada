@@ -1,0 +1,24 @@
+{
+  "name": "engenharia-ia-aplicada",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luizfelipeviana/engenharia-ia-aplicada.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luizfelipeviana/engenharia-ia-aplicada/issues"
+  },
+  "homepage": "https://github.com/luizfelipeviana/engenharia-ia-aplicada#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0"
+  }
+}
