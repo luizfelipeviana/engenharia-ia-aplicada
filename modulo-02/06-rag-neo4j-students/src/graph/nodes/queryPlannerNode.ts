@@ -1,0 +1,55 @@
+import { OpenRouterService } from '../../services/openrouterService.ts';
+import type { GraphState } from '../graph.ts';
+import {getSystemPrompt, getUserPromptTemplate, QueryAnalysisSchema} from "../../prompts/v1/queryAnalyzer.ts";
+
+export function createQueryPlannerNode(llmClient: OpenRouterService) {
+
+  return async (state: GraphState): Promise<Partial<GraphState>> => {
+
+    try {
+      const systemPrompt = getSystemPrompt()
+      const userPrompt = getUserPromptTemplate(state.question!)
+
+      const { data, error } = await llmClient.generateStructured(
+          systemPrompt,
+          userPrompt,
+          QueryAnalysisSchema,
+      )
+
+      if(error) {
+        console.log(`⚠️  Failed to analyze query, assuming simple: ${error}`);
+        return {
+          ...state,
+          isMultiStep: false,
+        };
+      }
+
+      if(data?.requiresDecomposition && !!data.subQuestions?.length) {
+        const subQuestionsFormatted = data.subQuestions
+            .map((q: string, i: number) => `\n  ${i+1}. ${q}`)
+            .join('')
+        console.log(`📊 Complex query - ${data.subQuestions.length} steps:${subQuestionsFormatted}`);
+
+        return {
+          isMultiStep: true,
+          subQuestions: data.subQuestions,
+          currentStep: 0,
+          subQueries: [],
+          subResults: [],
+        }
+      }
+
+      console.log('✅ Simple query - single step');
+      return {
+        ...state,
+        isMultiStep: false,
+      };
+    } catch (error: any) {
+      console.error('❌ Error analyzing query:', error.message);
+      return {
+        ...state,
+        isMultiStep: false,
+      };
+    }
+  }
+}

@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="06 debug" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/06-rag-neo4j-students/package.json" />
+    <command value="run" />
+    <scripts>
+      <script value="debug" />
+    </scripts>
+    <node-interpreter value="$USER_HOME$/.nvm/versions/node/v24.20.0/bin/node" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>
